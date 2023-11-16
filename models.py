@@ -7,10 +7,10 @@ class Book():
 
     def __init__(self, title: str = None, author: str = None, year: int = None, price: float = None, obj: dict = None):
         if obj is not None and obj.get(title, None) is not None:
-            title = obj.get(title)
-            author = obj.get(author, 'No author')
-            year = obj.get(year, datetime.now().year)
-            price = obj.get(price, 0.0)
+            self.title = obj.get(title)
+            self.author = obj.get(author, 'No author')
+            self.year = obj.get(year, datetime.now().year)
+            self.price = obj.get(price, 0.0)
 
         elif title is not None:
             self.title = title
