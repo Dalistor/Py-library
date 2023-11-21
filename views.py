@@ -10,24 +10,34 @@ def page_config(page_title: str = None):
 def page_choose(*args, title: str = None):
     page_config(page_title=title)
 
-    for index, value in enumerate(list(args)):
+    responses = list(args)
+
+    for index, value in enumerate(responses):
         print(f'{index + 1} - {value}')
 
     response = int(input('\nResposta: ')) - 1
 
-    return list(args)[response]
+    return responses[response]
 
 def page_questions(*args, title: str = None):
     page_config(page_title=title)
 
     responses = []
-    for index, value in enumerate(list(args)):
-        response = input(f'{index + 1} - {value}: ')
+    for value, code_value, required in list(args):
+        response = input(f'{value}: ')
         
-        if response is not None or response != '':
-            responses.append(response)
+        while True:
+            if response:
+                responses.append((code_value, response))
+                break
 
-    return response
+            elif required:
+                response = input(f'Esse campo é obrigatório, insira o(a) {str(value).lower()}: ')
+
+            else:
+                break
+
+    return responses
 
 class Views:
     def home():
@@ -37,4 +47,4 @@ class Views:
         return page_choose('Novo cliente', 'Procurar cliente', 'Editar cliente', 'Excluir cliente', 'Voltar', title='Sessão de clientes')
     
     def new_client():
-        return page_questions('pergunta 1', 'pergunta 2')
+        return page_questions(('Nome', 'name', True), ('CPF', 'cpf', True), ('Telefone', 'phone', False))

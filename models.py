@@ -24,18 +24,30 @@ class Library():
                 self.price = new.get('price', 0.0)
 
                 self.edited = False
-                self.id = Library.Book.id
+                self.id = Library.Book._id
 
                 Library.Book.total += 1
-                Library.Book.id += 1
+                Library.Book._id += 1
 
                 Library.Book.books[self.title] = self
-
-                return self
 
             elif new is not None:
                 raise Exception('Error when creating a new book, the book has a title?')
             
+        def info(self):
+            '''
+            Retorna dados da instância
+            '''
+
+            values = {
+                'title': self.title,
+                'author': self.author,
+                'year': self.year,
+                'price': self.price,
+                'id': self.id
+            }
+
+            return values
 
         def find(values: dict = None):
             '''
@@ -85,7 +97,7 @@ class Library():
             new: aceita um dicionário com os seguintes valores = name: str, cpf: str, phone: str (name e cpf são campos obrigatórios). Retorna a nova instância.
             '''
 
-            if new is not None and all(getattr(new, attr) is not None for attr in ['name', 'cpf']):
+            if new is not None and all(new.get(attr) is not None for attr in ['name', 'cpf']):
                 self.name = new.get('name')
                 self.cpf = new.get('cpf')
                 self.phone = new.get('phone', 'No phone')
@@ -93,16 +105,30 @@ class Library():
                 self.books = []
                 self.edited = False
 
-                self.id = Library.Client.id
+                self.id = Library.Client._id
 
                 Library.Client.total += 1
-                Library.Client.id += 1
+                Library.Client._id += 1
 
                 Library.Client.clients[self.name] = self
 
             elif new is not None:
                 raise Exception('Error when creating a new client, are you sure that name and cpf were filled in?')
             
+        def info(self):
+            '''
+            Retorna dados da instância
+            '''
+
+            values = {
+                'name': self.name,
+                'cpf': self.cpf,
+                'phone': self.phone,
+                'id': self.id
+            }
+
+            return values
+
         def find(values: dict = None):
             '''
             Retorna instâncias de clientes de acordo com o dicionário fornecido.
