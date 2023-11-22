@@ -1,11 +1,14 @@
-from models import Library
-from views import Views
-from connection import DataConnection
+from engine.models import Library
+from engine.views import Views
+from engine.connection import DataConnection
 
-import json
+# Carregar informações já salvas
+DataConnection.remember()
 
+# Iniciar programa
 response = Views.home()
 
+# Controle de ações do programa
 while True:
     if response == 'Voltar':
         response = Views.home()

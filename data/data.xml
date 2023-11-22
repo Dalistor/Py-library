@@ -1,4 +1,4 @@
 <library>
     <clients></clients>
-    <books></books>
+    <books />
 </library>
