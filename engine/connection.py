@@ -47,3 +47,15 @@ class DataConnection():
 
         tag.append(info)
         tree.write('data/data.xml')
+
+    def find_entity(field: str, key: str, value):
+        _, _, tags = getEntityXML(file_address=data_address, local=field, all=True)
+
+        result = []
+        for tag in tags:
+            tag_value = tag.find(key).text
+
+            if tag_value == value:
+                result.append({el.tag: el.text for el in tag})
+
+        return result

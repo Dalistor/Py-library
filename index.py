@@ -22,6 +22,15 @@ while True:
         new_client = Library.Client(response)
         DataConnection.save(new_client.info(), 'client')
 
+        response = Views.client()
+
+    if response == 'Procurar cliente':
+        key, value = Views.find_client_method()
+
+        result = DataConnection.find_entity('client', key, value)
+        Views.find_client(result)
+
+        response = Views.client()
 
     if response == 'Sair':
         break
