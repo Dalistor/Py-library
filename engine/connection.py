@@ -35,8 +35,10 @@ class DataConnection():
                 elements = {el.tag: el.text for el in tag}
 
                 if value == 'client':
+                    Library.Client._id = int(elements.get('id'))
                     Library.Client(elements)
                 elif value == 'book':
+                    Library.Book._id = int(elements.get('id'))
                     Library.Book(elements)
 
 
@@ -46,9 +48,10 @@ class DataConnection():
         tree, _, tag = getEntityXML(file_address='data/data.xml', local=local)
 
         tag.append(info)
+        tag.set('actualID', str(object.get('id')))
         tree.write('data/data.xml')
 
-    def find_entity(field: str, key: str, value):
+    def find(field: str, key: str, value):
         _, _, tags = getEntityXML(file_address=data_address, local=field, all=True)
 
         result = []
@@ -59,3 +62,32 @@ class DataConnection():
                 result.append({el.tag: el.text for el in tag})
 
         return result
+
+    def edit(values: list, field: str):
+        tree, _, tags = getEntityXML(file_address=data_address, local=field, all=True)
+
+        for tag in tags:
+            if tag.find('id').text == values[0][1]:
+                values.pop(0)
+
+                for key, value in values:
+                    tag.find(key).text = value
+                    
+                    tree.write(data_address)
+                    
+                break
+
+    def remove(id: int, field: str):
+        tree, root, tags = getEntityXML(file_address=data_address, local=field, all=True)
+
+        for tag in tags:
+            tag_id = int(tag.find('id').text)
+            
+            if tag_id == id:
+                root = root.find('clients')
+
+                root.remove(tag)
+                tree.write(data_address)
+
+                print(f"Tag com id={id} removida com sucesso.")
+                break

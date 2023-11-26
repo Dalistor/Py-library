@@ -27,8 +27,20 @@ while True:
     if response == 'Procurar cliente':
         key, value = Views.find_client_method()
 
-        result = DataConnection.find_entity('client', key, value)
-        Views.find_client(result)
+        result = DataConnection.find('client', key, value)
+        Views.find_client(result, True)
+
+        response = Views.client()
+
+    if response == 'Editar cliente':
+        edit_values = Views.client_edit()
+        DataConnection.edit(edit_values, 'client')
+
+        response = Views.client()
+
+    if response == 'Excluir cliente':
+        client = Views.client_remove()
+        DataConnection.remove(client, 'client')
 
         response = Views.client()
 

@@ -73,6 +73,8 @@ def print_results(results: dict, title: str = None):
                 key = 'Preço'
 
             print(f'{index + 1} - {key}: {value}')
+        
+        print('#############')
 
     input('\nPrecione enter para voltar')
 
@@ -94,3 +96,13 @@ class Views:
     
     def find_client(results: dict):
         return print_results(results)
+    
+    def client_edit():
+        field = page_questions(('ID', 'id', True), ('Nome', 'name', False), ('CPF', 'cpf', False), ('Telefone', 'phone', False), title='Preencha os campos para editar o valor (pegue o ID do cliente na sessão de procurar clientes)')
+
+        return field
+    
+    def client_remove():
+        page_config(page_title='Insira o id do cliente que deseja deletar')
+        
+        return int(input('ID: '))

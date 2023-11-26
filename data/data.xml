@@ -1,4 +1,4 @@
 <library>
-    <clients></clients>
+    <clients actualID="0" />
     <books />
 </library>
