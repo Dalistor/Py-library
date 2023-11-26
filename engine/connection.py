@@ -84,7 +84,7 @@ class DataConnection():
             tag_id = int(tag.find('id').text)
             
             if tag_id == id:
-                root = root.find('clients')
+                root = root.find(f'.//{field}s')
 
                 root.remove(tag)
                 tree.write(data_address)
