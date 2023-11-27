@@ -1,6 +1,7 @@
 from engine.models import Library
 
 import xml.etree.ElementTree as ET
+import json
 
 data_address = 'data/data.xml'
 tables = ['client', 'book']
@@ -75,6 +76,37 @@ class DataConnection():
                     
                     tree.write(data_address)
                     
+                break
+
+    def update(insert: list = None, delete: list = None, local: str = None):
+        tree, _, tags = getEntityXML(file_address=data_address, local=local, all=True)
+
+        
+        for tag in tags:
+            if insert is not None:
+                if tag.find('id').text == insert[0][1]:
+                    insert.pop(0)
+
+                    for key, value in insert:
+                        obj = json.loads(tag.find(key).text)
+                        obj.append(value)
+
+                        tag.find(key).text = json.dumps(obj)
+                        tree.write(data_address)
+
+                break
+
+            elif delete is not None:
+                if tag.find('id').text == delete[0][1]:
+                    delete.pop(0)
+
+                    for key, value in delete:
+                        obj = json.loads(tag.find(key).text)
+                        obj.remove(str(value))
+
+                        tag.find(key).text = json.dumps(obj)
+                        tree.write(data_address)
+
                 break
 
     def remove(id: int, field: str):

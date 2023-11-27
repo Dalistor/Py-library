@@ -34,6 +34,18 @@ while True:
 
         response = Views.client()
 
+    if response == 'Emprestar livro':
+        lended_book = Views.lend_book()
+        DataConnection.update(insert=lended_book, local='client')
+
+        response = Views.client()
+
+    if response == 'Retirar livro':
+        unlended_book = Views.unlend_book()
+        DataConnection.update(delete=unlended_book, local='client')
+
+        response = Views.client()
+
     if response == 'Editar cliente':
         edit_values = Views.client_edit()
         DataConnection.edit(edit_values, 'client')

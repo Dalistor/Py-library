@@ -48,6 +48,11 @@ class Library():
             }
 
             return values
+        
+        def id_exist(id: int):
+            keys = [filter(lambda key: id in key[1], Library.Book.books.items())]
+
+            return True if len(keys) > 0 else False
 
         def find(values: dict = None):
             '''
@@ -124,10 +129,16 @@ class Library():
                 'name': self.name,
                 'cpf': self.cpf,
                 'phone': self.phone,
+                'borrowed_book': self.books,
                 'id': self.id
             }
 
             return values
+        
+        def id_exist(id: int):
+            keys = [filter(lambda key: id in key[1], Library.Client.clients.items())]
+
+            return True if len(keys) > 0 else False
 
         def find(values: dict = None):
             '''

@@ -85,7 +85,7 @@ class Views:
     # Clientes
 
     def client():
-        return page_choose('Novo cliente', 'Procurar cliente', 'Editar cliente', 'Excluir cliente', 'Voltar', title='Sessão de clientes')
+        return page_choose('Novo cliente', 'Procurar cliente', 'Emprestar livro', 'Retirar livro', 'Editar cliente', 'Excluir cliente', 'Voltar', title='Sessão de clientes')
     
     def new_client():
         return page_questions(('Nome', 'name', True), ('CPF', 'cpf', True), ('Telefone', 'phone', False))
@@ -98,6 +98,16 @@ class Views:
     
     def find_client(results: dict):
         return print_results(results)
+    
+    def lend_book():
+        field = page_questions(('ID do cliente', 'id', True), ('ID do livro', 'borrowed_book', True), title='Insira o id do cliente e do livro para fazer o empréstimo')
+
+        return field
+    
+    def unlend_book():
+        field = page_questions(('ID do cliente', 'id', True), ('ID do livro', 'borrowed_book', True), title='Insira o id do cliente e do livro para remover')
+
+        return field
     
     def client_edit():
         field = page_questions(('ID', 'id', True), ('Nome', 'name', False), ('CPF', 'cpf', False), ('Telefone', 'phone', False), title='Preencha os campos para editar o valor (pegue o ID do cliente na sessão de procurar clientes)')
